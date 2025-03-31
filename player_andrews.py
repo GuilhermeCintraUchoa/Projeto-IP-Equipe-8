@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.x -= 5
         if keys[K_RIGHT] or keys[K_d]:
             self.rect.x += 5
-        if (keys[K_SPACE] or keys[K_w]) and self.on_ground:
+        if (keys[K_SPACE] or keys[K_w] or keys[K_UP]) and self.on_ground:
             self.vel_y = -15
             self.on_ground = False
 
