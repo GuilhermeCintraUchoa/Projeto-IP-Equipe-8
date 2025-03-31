@@ -1,9 +1,8 @@
 import pygame
 from pygame.locals import *
 from settings import LARGURA, ALTURA, FPS, GREEN
-from player import Player
-from platform import Platform
-
+from player_andrews import Player
+from platform import Platform 
 
 # Inicializa o Pygame
 pygame.init()
