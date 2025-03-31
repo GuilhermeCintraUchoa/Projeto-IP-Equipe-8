@@ -57,14 +57,18 @@ class Player:
 
     def mover(self, largura_mapa):
         key = pygame.key.get_pressed()
-        if key[pygame.K_w]:
-            self.y -= 40 
-        if key[pygame.K_a]:
+        if key[pygame.K_a] or key[pygame.K_LEFT]:
             self.x -= self.velocidade 
-        if key[pygame.K_d] and ((self.x + 10) > (largura_mapa / 2) or (self.x + 10) < (largura_mapa / 2)):
+        if key[pygame.K_d] or key[pygame.K_RIGHT]:
             self.x += self.velocidade 
 
         self.quadrado.x = self.x
+        self.quadrado.y = self.y
+
+    def pular(self):
+        key = pygame.key.get_pressed()
+        if key[pygame.K_w] or key[pygame.K_SPACE]:
+            self.y -= 40 
         self.quadrado.y = self.y
 
     def gravidade(self):
@@ -73,5 +77,7 @@ class Player:
     
     def desenhar(self, tela):
         pygame.draw.rect(tela, (0, 255, 0), self.quadrado)
+
+
 
 >>>>>>> 0002b878a8b1f5d17dd08bff4df474350d6138a5
