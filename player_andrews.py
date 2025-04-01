@@ -43,3 +43,7 @@ class Player(pygame.sprite.Sprite):
                 self.rect.bottom = platform.rect.top
                 self.vel_y = 0
                 self.on_ground = True
+            elif self.rect.colliderect(platform.rect) and self.vel_y < 0:
+                self.rect.top = platform.rect.bottom
+                self.vel_y = 0
+                self.on_ground = True
