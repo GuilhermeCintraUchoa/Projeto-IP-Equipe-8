@@ -59,9 +59,7 @@ class Player(pygame.sprite.Sprite):
 
     def colisao_inimigo(self, inimigo):
         for enemy in inimigo:
-            if self.rect.colliderect(enemy):
-                morreu = True 
+            if self.rect.colliderect(enemy): 
                 self.kills += 1
-            else:
-                morreu = False 
-            return morreu 
+                return True 
+        return False
