@@ -2,7 +2,8 @@ import pygame
 from pygame.locals import *
 from settings import LARGURA, ALTURA, FPS, GREEN
 from player_andrews import Player
-from platform import Platform 
+from platform_andrews import Platform 
+from enemy import Enemy
 
 # Inicializa o Pygame
 pygame.init()
@@ -17,9 +18,11 @@ platforms = pygame.sprite.Group()
 platforms.add(Platform(200, 350, 200, 20))
 platforms.add(Platform(450, 250, 200, 20))
 platforms.add(Platform(100, 150, 200, 20))
+enemy = Enemy(100, 100)
 
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
+all_sprites.add(enemy)
 all_sprites.add(*platforms)
 
 # Loop principal
@@ -32,7 +35,7 @@ while going:
             going = False
     
     player.update(platforms)
-    
+    enemy.update()
     # Desenhar na tela
     screen.fill(GREEN)
     all_sprites.draw(screen)
