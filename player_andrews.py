@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.x -= 5
         if keys[K_RIGHT] or keys[K_d]:
             self.rect.x += 5
-        if (keys[K_SPACE] or keys[K_w]) and self.on_ground:
+        if (keys[K_SPACE] or keys[K_w] or keys[K_UP]) and self.on_ground:
             self.vel_y = -15
             self.on_ground = False
 
@@ -41,5 +41,9 @@ class Player(pygame.sprite.Sprite):
         for platform in platforms:
             if self.rect.colliderect(platform.rect) and self.vel_y > 0:
                 self.rect.bottom = platform.rect.top
+                self.vel_y = 0
+                self.on_ground = True
+            elif self.rect.colliderect(platform.rect) and self.vel_y < 0:
+                self.rect.top = platform.rect.bottom
                 self.vel_y = 0
                 self.on_ground = True
