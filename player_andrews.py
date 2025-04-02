@@ -25,7 +25,7 @@ class Player(pygame.sprite.Sprite):
             for plat in platforms:
                 if self.rect.colliderect(plat):  
                     self.rect.x -= 5  # Reverte o movimento
-            
+                   
         self.vel_y += 1
         self.rect.y += self.vel_y  
         self.on_ground = False  
@@ -56,3 +56,12 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         if (keys[K_SPACE] or keys[K_w] or keys[K_UP]) and self.on_ground:
             self.vel_y = -15
+
+    def colisao_inimigo(self, inimigo):
+        for enemy in inimigo:
+            if self.rect.colliderect(enemy):
+                morreu = True 
+                self.kills += 1
+            else:
+                morreu = False 
+            return morreu 
