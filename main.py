@@ -2,7 +2,8 @@ import pygame
 from pygame.locals import *
 from settings import LARGURA, ALTURA, FPS, GREEN
 from player_andrews import Player
-from platform import Platform 
+from platform_andrews import Platform 
+from enemy import Enemy
 
 # Inicializa o Pygame
 pygame.init()
@@ -35,6 +36,7 @@ while going:
             going = False
     
     player.update(platforms)
+    player.pular()
     enemy.update()
     # Desenhar na tela
     screen.fill(GREEN)

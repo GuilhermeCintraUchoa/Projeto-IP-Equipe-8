@@ -17,15 +17,30 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         if keys[K_LEFT] or keys[K_a]:
             self.rect.x -= 5
+            for plat in platforms:
+                if self.rect.colliderect(plat):  
+                    self.rect.x += 5  # Reverte o movimento
         if keys[K_RIGHT] or keys[K_d]:
             self.rect.x += 5
-        if (keys[K_SPACE] or keys[K_w] or keys[K_UP]) and self.on_ground:
-            self.vel_y = -15
-            self.on_ground = False
+            for plat in platforms:
+                if self.rect.colliderect(plat):  
+                    self.rect.x -= 5  # Reverte o movimento
+            
+        self.vel_y += 1
+        self.rect.y += self.vel_y  
+        self.on_ground = False  
 
-        self.vel_y += 1  # Gravidade
-        self.rect.y += self.vel_y
-
+        # Colisão com as plataformas
+        for plat in platforms:
+            if self.rect.colliderect(plat):
+                if self.vel_y > 0:  # Se estiver caindo
+                    self.rect.bottom = plat.rect.top  
+                    self.vel_y = 0  
+                    self.on_ground = True  # Confirma que está no chão
+                elif self.vel_y < 0:  # Se bater a cabeça
+                    self.rect.top = plat.rect.bottom
+                    self.vel_y = 0
+        
         # Colisão com o chão
         if self.rect.bottom > ALTURA:
             self.rect.bottom = ALTURA
@@ -37,13 +52,7 @@ class Player(pygame.sprite.Sprite):
         if self.rect.right > LARGURA:
             self.rect.right = LARGURA 
 
-        # Colisão com as plataformas
-        for platform in platforms:
-            if self.rect.colliderect(platform.rect) and self.vel_y > 0:
-                self.rect.bottom = platform.rect.top
-                self.vel_y = 0
-                self.on_ground = True
-            elif self.rect.colliderect(platform.rect) and self.vel_y < 0:
-                self.rect.top = platform.rect.bottom
-                self.vel_y = 0
-                self.on_ground = True
+    def pular(self):
+        keys = pygame.key.get_pressed()
+        if (keys[K_SPACE] or keys[K_w] or keys[K_UP]) and self.on_ground:
+            self.vel_y = -15
