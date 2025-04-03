@@ -1,12 +1,13 @@
 import pygame
 from pygame.locals import *
+from enemy import Enemy
 from settings import WHITE, ALTURA, LARGURA
 
 # Classe do jogador
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.image = pygame.Surface((40, 50))
+        self.image = pygame.Surface((60, 60))
         self.image.fill(WHITE)
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
@@ -57,9 +58,8 @@ class Player(pygame.sprite.Sprite):
         if (keys[K_SPACE] or keys[K_w] or keys[K_UP]) and self.on_ground:
             self.vel_y = -15
 
-    def colisao_inimigo(self, inimigo):
-        for enemy in inimigo:
-            if self.rect.colliderect(enemy): 
-                self.kills += 1
-                return True 
-        return False
+    def colisao_inimigo(self, enemy):
+        if self.rect.colliderect(enemy.rect):  # Verifica colisão
+            enemy.vida -= 1  # Reduz a vida do inimigo
+            return True  # Retorna True se houve colisão
+        return False  # Retorna False se não houve colisão
