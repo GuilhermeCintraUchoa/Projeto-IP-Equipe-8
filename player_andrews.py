@@ -1,6 +1,5 @@
 import pygame
 from pygame.locals import *
-from enemy import Enemy
 from settings import WHITE, ALTURA, LARGURA
 
 # Classe do jogador
@@ -59,7 +58,6 @@ class Player(pygame.sprite.Sprite):
             self.vel_y = -15
 
     def colisao_inimigo(self, enemy):
-        if self.rect.colliderect(enemy.rect):  # Verifica colisão
-            enemy.vida -= 1  # Reduz a vida do inimigo
+        if self.rect.colliderect(enemy) and self.vel_y > 0:  # Verifica colisão
             return True  # Retorna True se houve colisão
         return False  # Retorna False se não houve colisão

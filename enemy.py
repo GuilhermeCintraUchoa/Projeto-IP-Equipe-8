@@ -24,7 +24,7 @@ class Enemy(pygame.sprite.Sprite):
         # Inverte direção se atingir os limites
         if self.rect.right >= self.right_limit or self.rect.left <= self.left_limit:
             self.vel_x *= -1
-
+    
     def die(self):
-        if vida <= 0:
+        if self.vida <= 0:
             self.kill()

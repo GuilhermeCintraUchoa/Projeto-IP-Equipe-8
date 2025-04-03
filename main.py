@@ -45,6 +45,7 @@ while going:
     enemy.update()
 
     if player.colisao_inimigo(enemy) and enemy.vida > 0:
+            enemy.vida -= 1
             enemy.die()
             kills += 1
 
