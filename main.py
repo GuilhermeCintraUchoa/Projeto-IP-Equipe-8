@@ -23,10 +23,12 @@ platforms.add(Platform(200, 350, 200, 20))
 platforms.add(Platform(450, 250, 200, 20))
 platforms.add(Platform(130, 150, 200, 20))
 enemy = Enemy(130, 100, 130, 370)
+enemies = pygame.sprite.Group() 
+enemies.add(enemy)
 
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
-all_sprites.add(enemy)
+all_sprites.add(enemies)
 all_sprites.add(*platforms)
 
 # Loop principal
@@ -43,7 +45,7 @@ while going:
     player.update(platforms)
     enemy.update()
 
-    if player.colisao_inimigo(enemy) and enemy.vida > 0:
+    if player.colisao_inimigo(enemies) and enemy.vida > 0:
         enemy.vida -= 1
         enemy.die()
         kills += 1
@@ -57,8 +59,7 @@ while going:
     mensagem = fonte.render(f"Monstros mortos: {kills}", True, BLACK)
     screen.blit(mensagem, (400, 10))
     all_sprites.draw(screen)
-
-    
+ 
     pygame.display.flip()
     
     

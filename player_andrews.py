@@ -58,8 +58,10 @@ class Player(pygame.sprite.Sprite):
         if self.rect.right > LARGURA:
             self.rect.right = LARGURA
 
-    def colisao_inimigo(self, enemy):
-        if self.rect.colliderect(enemy):  # Verifica colisão
+    def colisao_inimigo(self, enemies):
+        hits = pygame.sprite.spritecollide(self, enemies, dokill=False)
+        for enemy in enemies:   
+          if enemy in hits:  # Verifica colisão
             if self.vel_y > 0 and not self.invulnerabilidade:
               return True  # Retorna True se houve colisão e o inimigo morreu
             
