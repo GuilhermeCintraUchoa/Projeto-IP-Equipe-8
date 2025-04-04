@@ -1,8 +1,8 @@
 import pygame
 from pygame.locals import *
 from settings import LARGURA, ALTURA, FPS, GREEN, BLACK
-from player_andrews import Player
-from platform_andrews import Platform 
+from player_atk import Player
+from platform_test import Platform 
 from enemy import Enemy
 from sword_hitbox import SwordHitbox
 
