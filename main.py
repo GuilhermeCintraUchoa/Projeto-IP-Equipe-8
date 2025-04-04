@@ -41,13 +41,15 @@ while going:
             going = False
     
     player.update(platforms)
-    player.pular()
     enemy.update()
 
     if player.colisao_inimigo(enemy) and enemy.vida > 0:
-            enemy.vida -= 1
-            enemy.die()
-            kills += 1
+        enemy.vida -= 1
+        enemy.die()
+        kills += 1
+
+    player.morte()
+    player.sofreu_dano(all_sprites)
 
     # Desenhar na tela
     screen.fill(GREEN)
