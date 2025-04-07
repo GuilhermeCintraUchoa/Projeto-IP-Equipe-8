@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from settings import WHITE, ALTURA, LARGURA
+from sword_hitbox import SwordHitbox
 
 # Classe do jogador
 class Player(pygame.sprite.Sprite):
@@ -15,7 +16,8 @@ class Player(pygame.sprite.Sprite):
         self.on_ground = False
         self.invulnerabilidade = False #Se o player não pular em cima do inimigo, ex: Colidir lateralmente, ele perderá vida e entrará em um estado invulnerável
         self.start_time = 0 #Será guardado aqui o exato momento em que o player sofreu dano, pois aqui inicia o estado invunerável
-    
+        self.sword = SwordHitbox(x+50, y, 80, 100, dano=1)
+        
     def update(self, platforms):
         keys = pygame.key.get_pressed()
         if keys[K_LEFT] or keys[K_a]:
@@ -38,7 +40,7 @@ class Player(pygame.sprite.Sprite):
 
         # Colisão com as plataformas
         for plat in platforms:
-            if self.rect.colliderect(plat) :
+            if self.rect.colliderect(plat):
                 if self.vel_y > 0:  # Se estiver caindo
                     self.rect.bottom = plat.rect.top  
                     self.vel_y = 0  
@@ -82,6 +84,15 @@ class Player(pygame.sprite.Sprite):
             else:
                 all_sprites.add(self)
                 self.invulnerabilidade = False 
+
+    def attack(self, keys):
+        if keys[K_LEFT] or keys[K_a]:
+            direction = -1  
+        else:
+            direction = 1
+        sword_x = self.rect.x + (50 * direction)
+        sword_y = self.rect.y - 15
+        self.sword.activate(sword_x, sword_y, direction)
             
     def morte(self):
         if self.vida == 0:
