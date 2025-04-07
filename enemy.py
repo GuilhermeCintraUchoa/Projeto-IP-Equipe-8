@@ -25,6 +25,12 @@ class Enemy(pygame.sprite.Sprite):
         if self.rect.right >= self.right_limit or self.rect.left <= self.left_limit:
             self.vel_x *= -1
     
-    def die(self):
+    def levar_dano(self, dano):
+        self.vida -= dano
+        self.image.fill((255, 100, 100))
         if self.vida <= 0:
-            self.kill()
+            self.die()
+    
+    def die(self):
+        pygame.time.delay(100)
+        self.kill()
