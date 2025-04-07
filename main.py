@@ -24,7 +24,7 @@ platforms = pygame.sprite.Group()
 platforms.add(Platform(200, 350, 200, 20))
 platforms.add(Platform(450, 250, 200, 20))
 platforms.add(Platform(130, 150, 200, 20))
-enemy = Enemy(130, 100, 130, 370)
+enemy = Enemy(130, 100, 130, 370, 27)
 enemies = pygame.sprite.Group() 
 enemies.add(enemy)
 
@@ -116,7 +116,7 @@ def game():
                     kills += 1
 
         for enemy in enemies:
-            if player.colisao_inimigo(enemy) and enemy.vida > 0:
+            if player.colisao_inimigo(enemies) and enemy.vida > 0:
                 enemy.die()  # Mata o inimigo instantaneamente
                 kills += 1
 

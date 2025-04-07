@@ -85,7 +85,8 @@ class Player(pygame.sprite.Sprite):
                 all_sprites.add(self)
                 self.invulnerabilidade = False 
 
-    def attack(self, keys):
+    def attack(self):
+        keys = pygame.key.get_pressed()
         if keys[K_LEFT] or keys[K_a]:
             direction = -1  
         else:
