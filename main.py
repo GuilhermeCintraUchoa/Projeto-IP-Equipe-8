@@ -41,6 +41,10 @@ def draw_text(text, font, color, surface, x, y):
 
 click = False
 
+# Textos botoes
+text_play = fonte.render('jogar', False, (255, 255, 255))
+text_quit = fonte.render('quit', False, (255, 255, 255))
+
 def main_menu ():
     while True:
 
@@ -49,17 +53,27 @@ def main_menu ():
 
         mx, my = pygame.mouse.get_pos()
 
+        
         button_1 = pygame.Rect(50, 100, 200, 50)
+        
         button_2 = pygame.Rect(50, 200, 200, 50)
         
+
+        
+
         if button_1.collidepoint((mx, my)):
             if click:
                 game()
         if button_2.collidepoint((mx, my)):
             if click:
-                options()
-        pygame.draw.rect(screen, (255, 0, 0), button_1)
-        pygame.draw.rect(screen, (255, 0, 0), button_2)
+                quit()
+        pygame.draw.rect(screen, (20, 70, 150), button_1)
+        text_rect = text_play.get_rect(center=button_1.center)
+        screen.blit(text_play, text_rect)
+
+        pygame.draw.rect(screen, (20, 70, 150), button_2)
+        text_rect = text_quit.get_rect(center=button_2.center)
+        screen.blit(text_quit, text_rect)
 
         click = False
         for event in pygame.event.get():
@@ -115,21 +129,10 @@ def game():
         all_sprites.draw(screen)
         pygame.display.update()
 
-def options():
-    going = True
-    while going:
-        screen.fill((0,0,0))
-        draw_text('options', fonte, (255, 255, 255), screen, 20, 20)
-        clock.tick(FPS)
-        
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                going = False
-                sys.exit()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    going = False
-        pygame.display.update()
+def quit():
+    pygame.quit()
+    sys.exit()
+    
 
 
 main_menu()
