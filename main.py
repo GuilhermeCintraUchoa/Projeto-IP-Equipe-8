@@ -8,7 +8,7 @@ from enemy import Enemy
 # Inicializa o Pygame
 pygame.init()
 pygame.font.init()
-fonte = pygame.font.Font('freesansbold.ttf', 32)
+fonte = pygame.font.Font('graphics/RasterForgeRegular-JpBgm.ttf', 32)
 screen = pygame.display.set_mode((LARGURA, ALTURA))
 pygame.display.set_caption("Plataforma Pygame")
 clock = pygame.time.Clock()
@@ -56,8 +56,8 @@ while going:
     # Desenhar na tela
     screen.fill(GREEN)
     screen.blit(fundo, (0,0))
-    mensagem = fonte.render(f"Monstros mortos: {kills}", True, BLACK)
-    screen.blit(mensagem, (400, 10))
+    mensagem = pygame.transform.scale_by((fonte.render(f"Monstros mortos: {kills}", True, BLACK)), 0.7)
+    screen.blit(mensagem, (500, 10))
     all_sprites.draw(screen)
  
     pygame.display.flip()
