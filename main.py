@@ -6,6 +6,8 @@ from platform_andrews import Platform
 from enemy import Enemy
 from sword_hitbox import SwordHitbox
 import sys
+from moeda import Moeda
+import random
 
 # Inicializa o Pygame
 pygame.init()
@@ -27,6 +29,9 @@ platforms.add(Platform(130, 150, 200, 20))
 enemy = Enemy(130, 100, 130, 370, 27)
 enemies = pygame.sprite.Group() 
 enemies.add(enemy)
+
+
+
 
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
@@ -90,6 +95,14 @@ def main_menu():
 
 def game():
     kills = 0
+
+    moeda_atual = None
+    moeda_visivel = False
+    moedas_apareceram = 0
+    moedas_coletadas = 0
+    tempo_ultima_moeda = pygame.time.get_ticks()
+    MAX_MOEDAS = 3
+
     going = True
     while going:
         screen.fill((0, 0, 0))
@@ -106,6 +119,33 @@ def game():
         player.sword.update()
         player.update(platforms)
         enemies.update()
+
+        # Lógica da moeda com tempo entre uma e outra
+        tempo_atual = pygame.time.get_ticks()
+
+        # Criar nova moeda se não tiver nenhuma visível e ainda não atingimos o máximo
+        if not moeda_visivel and moedas_apareceram < MAX_MOEDAS:
+            if tempo_atual - tempo_ultima_moeda >= 3000:
+                moeda_atual = Moeda()
+                moeda_visivel = True
+                moedas_apareceram += 1  # Conta como "moeda que apareceu"
+                tempo_ultima_moeda = tempo_atual  # Marca o tempo que apareceu
+
+        # Atualizar moeda visível
+        if moeda_visivel and moeda_atual is not None:
+            moeda_atual.cair()
+
+            # Se foi coletada
+            if moeda_atual.verificar_colisao(player.rect):
+                moedas_coletadas += 1
+                moeda_visivel = False
+                moeda_atual = None
+
+            # Se saiu da tela
+            elif moeda_atual.y > ALTURA:
+                moeda_visivel = False
+                moeda_atual = None
+
 
         if player.sword.active:
             hits = pygame.sprite.spritecollide(player.sword, enemies, dokill=False)
@@ -130,8 +170,15 @@ def game():
         screen.blit(mensagem, (400, 10))
         all_sprites.draw(screen)
 
+        # exibe placar de moedas coletadas
+        moedas_txt = fonte.render(f"Moedas: {moedas_coletadas}", True, BLACK)
+        screen.blit(moedas_txt, (400, 50))
+
         if player.sword.active:
             screen.blit(player.sword.image, player.sword.rect.topleft)
+
+        if moeda_visivel:
+            moeda_atual.desenhar(screen)
 
         pygame.display.flip()
 
