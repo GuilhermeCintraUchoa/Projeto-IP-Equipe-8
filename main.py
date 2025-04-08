@@ -65,6 +65,7 @@ def main_menu():
         if button_1.collidepoint((mx, my)):
             if click:
                 game()
+                return
         if button_2.collidepoint((mx, my)):
             if click:
                 quit_game()
@@ -186,5 +187,5 @@ def quit_game():
     pygame.quit()
     sys.exit()
 
-main_menu()
-pygame.quit()
+if __name__:
+    main_menu()
