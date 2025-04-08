@@ -13,3 +13,5 @@ Guilherme Cintra <gcucc>, Thales Rafael <trcs>, José Bruno <jbnos>, Vitória da
 
   ## UI
     Guilherme Cintra: 07/04/25, inicio da implementacao de menus
+  ## coletáveis
+    Vinícius Lopes: [08/04: Criei um novo coletável (as moedas) e inseri no main.py.]
