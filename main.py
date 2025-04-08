@@ -8,6 +8,7 @@ from sword_hitbox import SwordHitbox
 import sys
 from moeda import Moeda
 import random
+from vidas import Vida
 
 # Inicializa o Pygame
 pygame.init()
@@ -97,12 +98,20 @@ def main_menu():
 def game():
     kills = 0
 
+    #moedas
     moeda_atual = None
     moeda_visivel = False
     moedas_apareceram = 0
     moedas_coletadas = 0
     tempo_ultima_moeda = pygame.time.get_ticks()
     MAX_MOEDAS = 3
+    #vidas
+    vida_extra = None
+    vida_extra_visivel = False
+    tempo_inicio_jogo = pygame.time.get_ticks()
+    tempo_vida_extra = None
+    invulneravel_ate = 0
+    jogador_invulneravel = False
 
     going = True
     while going:
@@ -122,15 +131,15 @@ def game():
         enemies.update()
 
         # Lógica da moeda com tempo entre uma e outra
-        tempo_atual = pygame.time.get_ticks()
+        tempo_atual_moeda = pygame.time.get_ticks()
 
         # Criar nova moeda se não tiver nenhuma visível e ainda não atingimos o máximo
         if not moeda_visivel and moedas_apareceram < MAX_MOEDAS:
-            if tempo_atual - tempo_ultima_moeda >= 3000:
+            if tempo_atual_moeda - tempo_ultima_moeda >= 3000:
                 moeda_atual = Moeda()
                 moeda_visivel = True
                 moedas_apareceram += 1  # Conta como "moeda que apareceu"
-                tempo_ultima_moeda = tempo_atual  # Marca o tempo que apareceu
+                tempo_ultima_moeda = tempo_atual_moeda  # Marca o tempo que apareceu
 
         # Atualizar moeda visível
         if moeda_visivel and moeda_atual is not None:
@@ -146,6 +155,28 @@ def game():
             elif moeda_atual.y > ALTURA:
                 moeda_visivel = False
                 moeda_atual = None
+
+        # Mostrar vida extra após 5 segundos (só uma vez)
+        tempo_atual_vida = pygame.time.get_ticks()
+        if not vida_extra_visivel and vida_extra is None and tempo_atual_vida - tempo_inicio_jogo >= 5000:
+            vida_extra = Vida()
+            vida_extra_visivel = True
+
+
+        if vida_extra_visivel and vida_extra:
+            vida_extra.cair()
+            if vida_extra.verificar_colisao(player.rect):
+                player.vida += 1
+                jogador_invulneravel = True
+                tempo_fim_invulnerabilidade = tempo_atual_vida + 3000
+                vida_extra = None
+                vida_extra_visivel = False
+            elif vida_extra.rect.y > ALTURA:
+                vida_extra = None
+                vida_extra_visivel = False
+
+        if jogador_invulneravel and tempo_atual_vida >= tempo_fim_invulnerabilidade:
+            jogador_invulneravel = False
 
 
         if player.sword.active:
@@ -167,6 +198,10 @@ def game():
         # Desenhar na tela
         screen.fill(GREEN)
         screen.blit(fundo, (0, 0))
+
+        if vida_extra_visivel and vida_extra is not None:
+            vida_extra.desenhar(screen)
+
         mensagem = fonte.render(f"Monstros mortos: {kills}", True, BLACK)
         screen.blit(mensagem, (400, 10))
         all_sprites.draw(screen)
