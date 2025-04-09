@@ -23,7 +23,10 @@ Guilherme Cintra <gcucc>, Thales Rafael <trcs>, José Bruno <jbnos>, Vitória da
     Andrews e Thales [01/04-02/04]: Correção de alguns bugs que aconteciam com a morte do inimigo. Ao utilizarmos o método self.kill(), o retangulo permanecia no jogo. Logo, ao chamarmos a função para verificar a colisão do jogador, o programa contava a sua morte mais de uma vez. 
 
   ## UI
-    Guilherme Cintra: 07/04/25, inicio da implementacao de menus
+    Guilherme Cintra: [07/04/25, inicio da implementacao de menus]
+                      [09/04/25, organizacao dos arquivos]
+                      [09/04/25, tela de replay]
+    
   ## coletáveis
     Vinícius Lopes: [08/04: Criei um novo coletável (as moedas) e inseri no main.py.]
                     [08/04: Criei um novo coletável (a vida) e inseri no main.py.]
