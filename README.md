@@ -34,8 +34,9 @@ Guilherme Cintra <gcucc>, Thales Rafael <trcs>, José Bruno <jbnos>, Vitória da
                     [09/04: Atualizei a lógica das vidas coletáveis dentro da função game() para que só aparecessem duas vidas ao longo da fase (com intervalo de 7 segundos do começo do jogo até a aparição da primeira vida e intervalo de 7 segundos entre uma vida e outra)                       e adicionei um placar que contabiliza as vidas coletadas.]
 
 
+
   ## UI
-  Vitória das Dores:  [02/04/25, Documento de Planjamento]
-                      [09/04/25, Configuração e layout do Background]
-                      [09/04/25, sprites da plataforma e dos inimigos]
+    Guilherme Cintra: [07/04/25, inicio da implementacao de menus]
+                      [09/04/25, organizacao dos arquivos]
+                      [09/04/25, tela de replay]
                       
