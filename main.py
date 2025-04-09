@@ -26,7 +26,7 @@ clouds = ParallaxBackground("Nuvens.png", speed=0.2, y_pos=0, auto_scroll_speed=
 
 
 # Criar objetos
-player = Player(100, ALTURA - 100)
+player = Player(100, ALTURA - 100, True)
 platforms = pygame.sprite.Group()
 platforms.add(Platform(200, 350, 200, 20))
 platforms.add(Platform(450, 250, 200, 20))
@@ -102,7 +102,7 @@ def main_menu():
 
 def game():            
     # Criar objetos
-    player = Player(100, ALTURA - 100)
+    player = Player(100, ALTURA - 100, True)
     platforms = pygame.sprite.Group()
     platforms.add(Platform(200, 350, 200, 20))
     platforms.add(Platform(450, 250, 200, 20))
