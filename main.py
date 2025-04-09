@@ -23,24 +23,6 @@ background = ParallaxBackground("Background.png", 0.2, 0)
 clouds = ParallaxBackground("Nuvens.png", speed=0.2, y_pos=0, auto_scroll_speed=0.3)
 
 
-# Criar objetos
-player = Player(100, ALTURA - 100)
-platforms = pygame.sprite.Group()
-platforms.add(Platform(200, 350, 200, 20))
-platforms.add(Platform(450, 250, 200, 20))
-platforms.add(Platform(130, 150, 200, 20))
-enemy_1 = Enemy(130, 100, 130, 370, 27)
-enemy_2 = Enemy(450, 200, 450, 700, vida=100)
-enemies = pygame.sprite.Group() 
-enemies.add(enemy_1)
-enemies.add(enemy_2)
-
-all_sprites = pygame.sprite.Group()
-all_sprites.add(player)
-all_sprites.add(enemies)
-all_sprites.add(*platforms)
-
-player_prev_x = player.rect.x
 
 # Funcao draw_text
 def draw_text(text, font, color, surface, x, y):
@@ -54,6 +36,7 @@ click = False
 # Textos botoes
 text_play = fonte.render('jogar', False, (255, 255, 255))
 text_quit = fonte.render('quit', False, (255, 255, 255))
+text_restart = fonte.render('restart', False, (255, 255, 255))
 
 def main_menu():
     global click
@@ -69,7 +52,6 @@ def main_menu():
         if button_1.collidepoint((mx, my)):
             if click:
                 game()
-                return
         if button_2.collidepoint((mx, my)):
             if click:
                 quit_game()
@@ -98,8 +80,25 @@ def main_menu():
         pygame.display.update()
         clock.tick(FPS)
 
-def game():
-    global player_prev_x
+def game():            
+    # Criar objetos
+    player = Player(100, ALTURA - 100)
+    platforms = pygame.sprite.Group()
+    platforms.add(Platform(200, 350, 200, 20))
+    platforms.add(Platform(450, 250, 200, 20))
+    platforms.add(Platform(130, 150, 200, 20))
+    enemy_1 = Enemy(130, 100, 130, 370, 27)
+    enemy_2 = Enemy(450, 200, 450, 700, vida=100)
+    enemies = pygame.sprite.Group() 
+    enemies.add(enemy_1)
+    enemies.add(enemy_2)
+
+    all_sprites = pygame.sprite.Group()
+    all_sprites.add(player)
+    all_sprites.add(enemies)
+    all_sprites.add(*platforms)
+
+    player_prev_x = player.rect.x
     kills = 0
 
     #moedas
@@ -125,8 +124,11 @@ def game():
         clock.tick(FPS)    
 
         for event in pygame.event.get():
+            
             if event.type == QUIT:
                 going = False
+                pygame.quit()
+                sys.exit()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_n:  # Attack when "n" is pressed
@@ -216,6 +218,9 @@ def game():
 
         player.morte()
         player.sofreu_dano(all_sprites)
+        if player.vida == 0:
+            going = False
+            play_again()
 
         # Desenhar na tela
         screen.fill(GREEN)
@@ -244,6 +249,57 @@ def game():
             moeda_atual.desenhar(screen)
 
         pygame.display.flip()
+
+def play_again():
+    text_play_again = fonte.render('Play again?', 13, (0, 0, 0))
+    textx_playagain = LARGURA / 2 - text_play_again.get_width() / 2
+    texty_playagain = (ALTURA / 2 - text_play_again.get_height() / 2) - 40
+    textx_size_playagain = text_play_again.get_width()
+    texty_size_playagain = text_play_again.get_height()
+
+    text_quit = fonte.render('QUIT', 13, (0, 0, 0))
+    textx_quit = LARGURA / 2 - text_quit.get_width() / 2
+    texty_quit = (ALTURA / 2 - text_quit.get_height() / 2) + 40
+    textx_size_quit = text_quit.get_width()
+    texty_size_quit = text_quit.get_height()
+
+    pygame.draw.rect(screen, (255, 255, 255), ((textx_playagain - 5, texty_playagain - 5),
+                                               (textx_size_playagain + 10, texty_size_playagain +
+                                                10)))
+
+    pygame.draw.rect(screen, (255, 255, 255), ((textx_quit -5, texty_quit -5),
+                                               (textx_size_quit + 10, texty_size_quit +
+                                                10)))
+
+    screen.blit(text_play_again, ((LARGURA / 2 - text_play_again.get_width() / 2),
+                       (ALTURA / 2 - text_play_again.get_height() / 2)-40))
+    
+    screen.blit(text_quit, ((LARGURA / 2 - text_quit.get_width() / 2),
+                       (ALTURA / 2 - text_quit.get_height() / 2)+40))
+
+    clock = pygame.time.Clock()
+    pygame.display.flip()
+    in_main_menu = True
+    while in_main_menu:
+        clock.tick(60)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                in_main_menu = False
+                pygame.display.quit()
+                pygame.quit()
+                quit()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x, y = event.pos
+                if x >= textx_playagain - 5 and x <= textx_playagain + textx_size_playagain + 5:
+                    if y >= texty_playagain - 5 and y <= texty_playagain + texty_size_playagain + 5:
+                        in_main_menu = False
+                        game()
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                z, w = event.pos
+                if z >= textx_quit - 5 and z <= textx_quit + textx_size_quit + 5:
+                    if w >= texty_quit - 5 and w <= texty_quit + texty_size_quit + 5:
+                        in_main_menu = False
+                        quit_game()
 
 def quit_game():
     pygame.quit()
