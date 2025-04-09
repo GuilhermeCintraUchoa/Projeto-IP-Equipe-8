@@ -8,18 +8,18 @@ from sword_hitbox import SwordHitbox
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.walk_right = pygame.image.load(os.path.join("assets", "images", "Jogador_Andando_Direita.png")).convert_alpha()
-        self.walk_left = pygame.image.load(os.path.join("assets", "images", "Jogador_Andando_Esquerda.png")).convert_alpha()
-        self.jump_right = pygame.image.load(os.path.join("assets", "images", "Jogador_Pulando_Direita.png")).convert_alpha()
-        self.jump_left = pygame.image.load(os.path.join("assets", "images", "Jogador_pulando_Esquerda.png")).convert_alpha()
+        self.run_right = pygame.image.load(os.path.join("assets", "sprites", "Player",  "Player_run_r.png")).convert_alpha()
+        self.run_left = pygame.image.load(os.path.join("assets", "sprites", "Player", "Player_run_l.png")).convert_alpha()
+        self.jump_right = pygame.image.load(os.path.join("assets", "sprites", "Player","Player_jump_r.png")).convert_alpha()
+        self.jump_left = pygame.image.load(os.path.join("assets", "sprites", "Player", "Player_jump_l.png")).convert_alpha()
         
         
-        self.walk_right = pygame.transform.scale(self.walk_right, (80, 110))
-        self.walk_left = pygame.transform.scale(self.walk_left, (80, 110))
+        self.run_right = pygame.transform.scale(self.run_right, (80, 110))
+        self.run_left = pygame.transform.scale(self.run_left, (80, 110))
         self.jump_right = pygame.transform.scale(self.jump_right, (80, 110))
         self.jump_left = pygame.transform.scale(self.jump_left, (80, 110))
         
-        self.image = self.walk_right  
+        self.image = self.run_right  
         self.rect = self.image.get_rect(topleft=(x, y))
         self.facing_left = False
         self.vida = 3
@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite):
             self.facing_left = False
 
         if self.on_ground:
-            self.image = self.walk_left if self.facing_left else self.walk_right
+            self.image = self.run_left if self.facing_left else self.run_right
         else:
             self.image = self.jump_left if self.facing_left else self.jump_right
 

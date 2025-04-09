@@ -5,7 +5,7 @@ from settings import RED
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y, left_limit, right_limit, vida):
         super().__init__()
-        self.image = pygame.image.load(os.path.join("assets", "images", "Inimigo.png")).convert_alpha()
+        self.image = pygame.image.load(os.path.join("assets", "sprites", "Inimigo.png")).convert_alpha()
         self.image = pygame.transform.scale(self.image, (50, 50))  
         self.rect = self.image.get_rect(topleft=(x, y))
         self.vel_x = 3  # Velocidade horizontal
