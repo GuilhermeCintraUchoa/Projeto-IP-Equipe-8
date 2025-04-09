@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from settings import LARGURA, ALTURA, FPS, GREEN, BLACK
+from Background import ParallaxBackground
 from player_andrews import Player
 from platform_andrews import Platform 
 from enemy import Enemy
@@ -18,8 +19,9 @@ screen = pygame.display.set_mode((LARGURA, ALTURA))
 pygame.display.set_caption("Plataforma Pygame")
 clock = pygame.time.Clock()
 
-fundo = pygame.image.load('download.jpg')
-fundo = pygame.transform.scale(fundo, (800, 450))
+background = ParallaxBackground("Background.png", 0.2, 0)
+clouds = ParallaxBackground("Nuvens.png", speed=0.2, y_pos=0, auto_scroll_speed=0.3)
+
 
 # Criar objetos
 player = Player(100, ALTURA - 100)
@@ -33,13 +35,12 @@ enemies = pygame.sprite.Group()
 enemies.add(enemy_1)
 enemies.add(enemy_2)
 
-
-
-
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 all_sprites.add(enemies)
 all_sprites.add(*platforms)
+
+player_prev_x = player.rect.x
 
 # Funcao draw_text
 def draw_text(text, font, color, surface, x, y):
@@ -98,6 +99,7 @@ def main_menu():
         clock.tick(FPS)
 
 def game():
+    global player_prev_x
     kills = 0
 
     #moedas
@@ -132,6 +134,22 @@ def game():
         player.sword.update()
         player.update(platforms)
         enemies.update()
+
+        player_dx = player.rect.x - player_prev_x
+        player_prev_x = player.rect.x
+
+        for plat in platforms:
+            plat.rect.x -= int(player_dx * 0.3)  
+    
+        for plat in platforms:
+            if plat.rect.right < 0:
+                plat.rect.left = LARGURA
+            elif plat.rect.left > LARGURA:
+                plat.rect.right = 0
+        
+
+        background.update(player_dx)
+        clouds.update(player_dx)
 
         # Lógica da moeda com tempo entre uma e outra
         tempo_atual_moeda = pygame.time.get_ticks()
@@ -199,7 +217,8 @@ def game():
 
         # Desenhar na tela
         screen.fill(GREEN)
-        screen.blit(fundo, (0, 0))
+        background.draw(screen)  
+        clouds.draw(screen)
 
         if vida_extra_visivel and vida_extra is not None:
             vida_extra.desenhar(screen)
