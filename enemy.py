@@ -29,5 +29,4 @@ class Enemy(pygame.sprite.Sprite):
             self.die()
     
     def die(self):
-        pygame.time.delay(100)
         self.kill()

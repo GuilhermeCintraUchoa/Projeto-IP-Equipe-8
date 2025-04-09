@@ -8,11 +8,13 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         self.vida = 3
+        self.moedas = 0
         self.image = pygame.Surface((60, 60))
         self.image.fill(WHITE)
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
         self.vel_y = 0
+        self.vel_x = 0
         self.on_ground = False
         self.invulnerabilidade = False #Se o player não pular em cima do inimigo, ex: Colidir lateralmente, ele perderá vida e entrará em um estado invulnerável
         self.start_time = 0 #Será guardado aqui o exato momento em que o player sofreu dano, pois aqui inicia o estado invunerável
@@ -21,12 +23,14 @@ class Player(pygame.sprite.Sprite):
     def update(self, platforms):
         keys = pygame.key.get_pressed()
         if keys[K_LEFT] or keys[K_a]:
-            self.rect.x -= 5
+            self.vel_x = -5
+            self.rect.x += self.vel_x
             for plat in platforms:
                 if self.rect.colliderect(plat):  
                     self.rect.x += 5  # Reverte o movimento
         if keys[K_RIGHT] or keys[K_d]:
-            self.rect.x += 5
+            self.vel_x = 5
+            self.rect.x += self.vel_x
             for plat in platforms:
                 if self.rect.colliderect(plat):  
                     self.rect.x -= 5  # Reverte o movimento
@@ -65,14 +69,14 @@ class Player(pygame.sprite.Sprite):
         for enemy in enemies:   
           if enemy in hits:  # Verifica colisão
             if self.vel_y > 0 and not self.invulnerabilidade:
-              return True  # Retorna True se houve colisão e o inimigo morreu
+              return True, enemy  # Retorna True se houve colisão e o inimigo morreu
             
             elif not self.invulnerabilidade: 
                 self.start_time = pygame.time.get_ticks() #Inicia o estado em que o player fica invulnerável            
                 self.invulnerabilidade = True 
                 self.vida -= 1 
 
-        return False  # Retorna False se o inimigo não morreu ou se não houve colisão 
+        return False, None  # Retorna False se o inimigo não morreu ou se não houve colisão 
     
     def sofreu_dano(self, all_sprites):
         if self.invulnerabilidade and self.vida > 0: 
@@ -86,14 +90,9 @@ class Player(pygame.sprite.Sprite):
                 self.invulnerabilidade = False 
 
     def attack(self):
-        keys = pygame.key.get_pressed()
-        if keys[K_LEFT] or keys[K_a]:
-            direction = -1  
-        else:
-            direction = 1
-        sword_x = self.rect.x + (50 * direction)
+        sword_x = self.rect.x + (10 * self.vel_x)
         sword_y = self.rect.y - 15
-        self.sword.activate(sword_x, sword_y, direction)
+        self.sword.activate(sword_x, sword_y, self.vel_x)
             
     def morte(self):
         if self.vida == 0:
