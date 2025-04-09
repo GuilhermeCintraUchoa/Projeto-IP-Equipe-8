@@ -107,6 +107,7 @@ def game():
     moedas_coletadas = 0
     tempo_ultima_moeda = pygame.time.get_ticks()
     MAX_MOEDAS = 3
+    
     #vidas
     vida_extra = None
     vida_extra_visivel = False
