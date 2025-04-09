@@ -245,7 +245,7 @@ def game():
         screen.blit(moedas_txt, (400, 50))
 
         # exibe placar de vidas coletadas
-        vidas_txt = fonte.render(f"Vidas coletadas: {vidas_coletadas}", True, BLACK)
+        vidas_txt = fonte.render(f"Vida: {player.vida}", True, BLACK)
         screen.blit(vidas_txt, (400, 90))
 
         if player.sword.active:
