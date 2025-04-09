@@ -190,9 +190,9 @@ def game():
         # Mostrar vida extra com intervalo de 5s entre uma e outra e com limite de 2 vidas
         tempo_atual_vida = pygame.time.get_ticks()
         if (not vida_extra_visivel and vida_extra is None 
-            and tempo_atual_vida - tempo_inicio_jogo >= 7000 
+            and tempo_atual_vida - tempo_inicio_jogo >= 9000 
             and vidas_apareceram < MAX_VIDAS 
-            and tempo_atual_vida - tempo_ultima_vida >= 7000):
+            and tempo_atual_vida - tempo_ultima_vida >= 9000):
             vida_extra = Vida()
             vida_extra_visivel = True
             vidas_apareceram += 1
