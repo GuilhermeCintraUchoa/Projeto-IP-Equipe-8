@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 from settings import *
 from Background import ParallaxBackground
-from player_andrews import Player
+from player_andrews import Player, Vida_tela, Moeda_tela
 from platform_andrews import Platform 
 from enemy import Enemy
 from sword_hitbox import SwordHitbox
@@ -111,6 +111,8 @@ def game():
 
     # Criar objetos
     player = Player(100, ALTURA - 100, True)
+    vida_tela = Vida_tela(20, 20)
+    moeda_tela = Moeda_tela(20, 70)
     platforms = pygame.sprite.Group()
     platforms.add(Platform(200, 350, 200, 20))
     platforms.add(Platform(450, 250, 200, 20))
@@ -124,6 +126,8 @@ def game():
     all_sprites = pygame.sprite.Group()
     all_sprites.add(player)
     all_sprites.add(enemies)
+    all_sprites.add(vida_tela)
+    all_sprites.add(moeda_tela)
     all_sprites.add(*platforms)
 
     player_prev_x = player.rect.x
@@ -253,12 +257,12 @@ def game():
         all_sprites.draw(screen)
 
         # exibe placar de moedas coletadas
-        moedas_txt = fonte.render(f"Moedas: {moedas_coletadas}", True, BLACK)
-        screen.blit(moedas_txt, (400, 50))
+        moedas_txt = fonte.render(f"{moedas_coletadas}", True, BLACK)
+        screen.blit(moedas_txt, (60, 73))
 
         # exibe placar de vidas coletadas
-        vidas_txt = fonte.render(f"Vida: {player.vida}", True, BLACK)
-        screen.blit(vidas_txt, (400, 90))
+        vidas_txt = fonte.render(f"{player.vida}", True, BLACK)
+        screen.blit(vidas_txt, (60, 23))
 
         if player.sword.active:
             screen.blit(player.sword.image, player.sword.rect.topleft)

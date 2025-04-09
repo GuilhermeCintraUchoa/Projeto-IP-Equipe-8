@@ -67,7 +67,6 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
         self.vel_y = 0
-        self.vel_x = 0
         self.on_ground = False
         self.invulnerabilidade = False #Se o player não pular em cima do inimigo, ex: Colidir lateralmente, ele perderá vida e entrará em um estado invulnerável
         self.start_time = 0 #Será guardado aqui o exato momento em que o player sofreu dano, pois aqui inicia o estado invunerável
@@ -130,10 +129,7 @@ class Player(pygame.sprite.Sprite):
         # Colisão horizontal (impede atravessar plataformas lateralmente)
         for plat in platforms:
             if self.rect.colliderect(plat):
-                if self.xDir > 0:
-                    self.rect.right = plat.rect.left
-                elif self.xDir < 0:
-                    self.rect.left = plat.rect.right
+                self.rect.x -= self.xDir * self.speed #Reverte o movimento
 
         # ---------------------------
         # APLICA GRAVIDADE
@@ -245,10 +241,34 @@ class Player(pygame.sprite.Sprite):
                 self.invulnerabilidade = False 
 
     def attack(self):
-        sword_x = self.rect.x + (10 * self.vel_x)
+        sword_x = self.rect.x + (50 * self.xDir)
         sword_y = self.rect.y - 15
-        self.sword.activate(sword_x, sword_y, self.vel_x)
+        self.sword.activate(sword_x, sword_y, self.facingRight)
             
     def morte(self):
         if self.vida == 0:
             self.kill()
+
+class Vida_tela(pygame.sprite.Sprite):
+     def __init__(self, x, y):
+        super().__init__()
+        # Cria a superfície com canal alpha para permitir transparência
+        self.image = pygame.Surface((30, 30), pygame.SRCALPHA)
+
+        # Desenha um coração estilizado (simples)
+        pygame.draw.circle(self.image, (255, 100, 100), (10, 10), 10)
+        pygame.draw.circle(self.image, (255, 100, 100), (20, 10), 10)
+        pygame.draw.polygon(self.image, (255, 100, 100), [(0, 15), (30, 15), (15, 30)])
+
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+class Moeda_tela(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+      super().__init__()
+      self.image = pygame.Surface((30, 30), pygame.SRCALPHA)
+      pygame.draw.circle(self.image, (255, 223, 0), (15, 15), 15)
+      self.rect = self.image.get_rect()
+      self.rect.x = x
+      self.rect.y = y

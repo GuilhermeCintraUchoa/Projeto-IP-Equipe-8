@@ -13,7 +13,7 @@ class SwordHitbox(pygame.sprite.Sprite):
         self.dano = dano
 
     def activate(self, x, y, direction):
-        if direction < 0:  # Para esquerda
+        if not direction:  # Para esquerda
             self.rect.topleft = (x - 40, y - 10)
         else:  # Para direita
             self.rect.topleft = (x + 40, y - 10)
