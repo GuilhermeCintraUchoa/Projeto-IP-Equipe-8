@@ -11,6 +11,8 @@ Guilherme Cintra <gcucc>, Thales Rafael <trcs>, José Bruno <jbnos>, Vitória da
     Andrews e Thales [31/03]: Adicionamos um background.
 
     Andrews, José e Thales [07/04]: Como havia mais de uma branch e arquivos com o mesmo código, com pouquíssimas diferenças, unificamos os códigos para que o projeto ficasse mais fácil de entender.
+
+    Guilherme Cintra [09/04]: Agora o jogo reinicia quando o player mata 2 inimigos e coleta 3 moedas 
   ## player
 
     Thales: [01/04: Melhorei a movimentação do player para evitar que ele atravessasse plataformas. Além disso, corrigi a lógica da colisão lateral do player com a plataforma, 
