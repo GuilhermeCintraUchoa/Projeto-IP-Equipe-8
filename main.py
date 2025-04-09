@@ -114,9 +114,10 @@ def game():
     vida_extra = None
     vida_extra_visivel = False
     tempo_inicio_jogo = pygame.time.get_ticks()
-    tempo_vida_extra = None
-    invulneravel_ate = 0
-    jogador_invulneravel = False
+    vidas_apareceram = 0
+    vidas_coletadas = 0
+    tempo_ultima_vida = pygame.time.get_ticks()
+    MAX_VIDAS = 2
 
     going = True
     while going:
@@ -178,16 +179,22 @@ def game():
                 moeda_atual = None
                 
 
-        # Mostrar vida extra após 5 segundos (só uma vez)
+        # Mostrar vida extra com intervalo de 5s entre uma e outra e com limite de 2 vidas
         tempo_atual_vida = pygame.time.get_ticks()
-        if not vida_extra_visivel and vida_extra is None and tempo_atual_vida - tempo_inicio_jogo >= 5000:
+        if (not vida_extra_visivel and vida_extra is None 
+            and tempo_atual_vida - tempo_inicio_jogo >= 7000 
+            and vidas_apareceram < MAX_VIDAS 
+            and tempo_atual_vida - tempo_ultima_vida >= 7000):
             vida_extra = Vida()
             vida_extra_visivel = True
+            vidas_apareceram += 1
+            tempo_ultima_vida = tempo_atual_vida
 
         if vida_extra_visivel and vida_extra:
             vida_extra.cair()
             if vida_extra.verificar_colisao(player.rect):
                 player.vida += 1
+                vidas_coletadas += 1
                 vida_extra = None
                 vida_extra_visivel = False
             elif vida_extra.rect.y > ALTURA:
@@ -225,6 +232,10 @@ def game():
         # exibe placar de moedas coletadas
         moedas_txt = fonte.render(f"Moedas: {moedas_coletadas}", True, BLACK)
         screen.blit(moedas_txt, (400, 50))
+
+        # exibe placar de vidas coletadas
+        vidas_txt = fonte.render(f"Vidas coletadas: {vidas_coletadas}", True, BLACK)
+        screen.blit(vidas_txt, (400, 90))
 
         if player.sword.active:
             screen.blit(player.sword.image, player.sword.rect.topleft)
