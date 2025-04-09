@@ -19,7 +19,7 @@ screen = pygame.display.set_mode((LARGURA, ALTURA))
 pygame.display.set_caption("Plataforma Pygame")
 clock = pygame.time.Clock()
 
-background = ParallaxBackground("Background.png", 0.2, 0)
+background = ParallaxBackground("Background.png", speed=0, y_pos=0)
 clouds = ParallaxBackground("Nuvens.png", speed=0.2, y_pos=0, auto_scroll_speed=0.3)
 
 
@@ -136,21 +136,7 @@ def game():
         player.update(platforms)
         enemies.update()
 
-        player_dx = player.rect.x - player_prev_x
-        player_prev_x = player.rect.x
-
-        for plat in platforms:
-            plat.rect.x -= int(player_dx * 0.3)  
-    
-        for plat in platforms:
-            if plat.rect.right < 0:
-                plat.rect.left = LARGURA
-            elif plat.rect.left > LARGURA:
-                plat.rect.right = 0
-        
-
-        background.update(player_dx)
-        clouds.update(player_dx)
+        clouds.update(0)
 
         # Lógica da moeda com tempo entre uma e outra
         tempo_atual_moeda = pygame.time.get_ticks()
