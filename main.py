@@ -37,6 +37,9 @@ enemies = pygame.sprite.Group()
 enemies.add(enemy_1)
 enemies.add(enemy_2)
 
+kills = 0
+moedas_coletadas = 0
+
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 all_sprites.add(enemies)
@@ -100,7 +103,12 @@ def main_menu():
         pygame.display.update()
         clock.tick(FPS)
 
-def game():            
+def game():
+    global kills
+    global moedas_coletadas 
+    moedas_round = 0
+    kills_round = 0
+
     # Criar objetos
     player = Player(100, ALTURA - 100, True)
     platforms = pygame.sprite.Group()
@@ -119,13 +127,12 @@ def game():
     all_sprites.add(*platforms)
 
     player_prev_x = player.rect.x
-    kills = 0
+    
 
     #moedas
     moeda_atual = None
     moeda_visivel = False
     moedas_apareceram = 0
-    moedas_coletadas = 0
     tempo_ultima_moeda = pygame.time.get_ticks()
     MAX_MOEDAS = 3
     
@@ -164,7 +171,7 @@ def game():
         tempo_atual_moeda = pygame.time.get_ticks()
 
         # Criar nova moeda se não tiver nenhuma visível e ainda não atingimos o máximo
-        if not moeda_visivel and moedas_apareceram < MAX_MOEDAS:
+        if not moeda_visivel:
             if tempo_atual_moeda - tempo_ultima_moeda >= 3000:
                 moeda_atual = Moeda()
                 moeda_visivel = True
@@ -178,6 +185,7 @@ def game():
             # Se foi coletada
             if moeda_atual.verificar_colisao(player.rect):
                 moedas_coletadas += 1
+                moedas_round += 1
                 moeda_visivel = False
                 moeda_atual = None
 
@@ -217,15 +225,19 @@ def game():
                 if enemy.vida <= 0:
                     enemy.kill()
                     kills += 1
+                    kills_round += 1
         colisao_inimigo, enemie = player.colisao_inimigo(enemies)
         if colisao_inimigo:
             enemie.die()  # Mata o inimigo instantaneamente
             kills += 1
+            kills_round += 1
 
         player.morte()
         player.sofreu_dano(all_sprites)
         if player.vida == 0:
             going = False
+            kills = 0
+            moedas_coletadas = 0
             play_again()
 
         # Desenhar na tela
@@ -253,6 +265,10 @@ def game():
 
         if moeda_visivel:
             moeda_atual.desenhar(screen)
+
+        if((moedas_round==3) and kills_round == 1):
+            print("A")
+            game()
 
         pygame.display.flip()
 
