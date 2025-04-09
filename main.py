@@ -20,7 +20,7 @@ pygame.display.set_caption("Plataforma Pygame")
 clock = pygame.time.Clock()
 
 background = ParallaxBackground("Background.png", speed=0, y_pos=0)
-clouds = ParallaxBackground("Nuvens.png", speed=0.2, y_pos=0, auto_scroll_speed=0.3)
+clouds = ParallaxBackground("Cloud.png", speed=0.2, y_pos=0, auto_scroll_speed=0.3)
 
 
 # Criar objetos
