@@ -176,6 +176,7 @@ def game():
             elif moeda_atual.y > ALTURA:
                 moeda_visivel = False
                 moeda_atual = None
+                
 
         # Mostrar vida extra após 5 segundos (só uma vez)
         tempo_atual_vida = pygame.time.get_ticks()
@@ -183,21 +184,15 @@ def game():
             vida_extra = Vida()
             vida_extra_visivel = True
 
-
         if vida_extra_visivel and vida_extra:
             vida_extra.cair()
             if vida_extra.verificar_colisao(player.rect):
                 player.vida += 1
-                jogador_invulneravel = True
-                tempo_fim_invulnerabilidade = tempo_atual_vida + 3000
                 vida_extra = None
                 vida_extra_visivel = False
             elif vida_extra.rect.y > ALTURA:
                 vida_extra = None
                 vida_extra_visivel = False
-
-        if jogador_invulneravel and tempo_atual_vida >= tempo_fim_invulnerabilidade:
-            jogador_invulneravel = False
 
 
         if player.sword.active:
