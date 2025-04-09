@@ -1,4 +1,5 @@
 import pygame
+import os
 from pygame.locals import *
 from settings import WHITE, ALTURA, LARGURA
 from sword_hitbox import SwordHitbox
@@ -7,12 +8,22 @@ from sword_hitbox import SwordHitbox
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
+        self.walk_right = pygame.image.load(os.path.join("assets", "images", "Jogador_Andando_Direita.png")).convert_alpha()
+        self.walk_left = pygame.image.load(os.path.join("assets", "images", "Jogador_Andando_Esquerda.png")).convert_alpha()
+        self.jump_right = pygame.image.load(os.path.join("assets", "images", "Jogador_Pulando_Direita.png")).convert_alpha()
+        self.jump_left = pygame.image.load(os.path.join("assets", "images", "Jogador_pulando_Esquerda.png")).convert_alpha()
+        
+        
+        self.walk_right = pygame.transform.scale(self.walk_right, (80, 110))
+        self.walk_left = pygame.transform.scale(self.walk_left, (80, 110))
+        self.jump_right = pygame.transform.scale(self.jump_right, (80, 110))
+        self.jump_left = pygame.transform.scale(self.jump_left, (80, 110))
+        
+        self.image = self.walk_right  
+        self.rect = self.image.get_rect(topleft=(x, y))
+        self.facing_left = False
         self.vida = 3
         self.moedas = 0
-        self.image = pygame.Surface((60, 60))
-        self.image.fill(WHITE)
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
         self.vel_y = 0
         self.vel_x = 0
         self.on_ground = False
@@ -21,7 +32,20 @@ class Player(pygame.sprite.Sprite):
         self.sword = SwordHitbox(x+50, y, 80, 100, dano=1)
         
     def update(self, platforms):
+
         keys = pygame.key.get_pressed()
+
+        if keys[K_LEFT] or keys[K_a]:
+            self.facing_left = True
+        elif keys[K_RIGHT] or keys[K_d]:
+            self.facing_left = False
+
+        if self.on_ground:
+            self.image = self.walk_left if self.facing_left else self.walk_right
+        else:
+            self.image = self.jump_left if self.facing_left else self.jump_right
+
+        
         if keys[K_LEFT] or keys[K_a]:
             self.vel_x = -5
             self.rect.x += self.vel_x

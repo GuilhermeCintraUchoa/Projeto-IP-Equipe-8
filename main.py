@@ -26,9 +26,9 @@ clouds = ParallaxBackground("Nuvens.png", speed=0.2, y_pos=0, auto_scroll_speed=
 # Criar objetos
 player = Player(100, ALTURA - 100)
 platforms = pygame.sprite.Group()
-platforms.add(Platform(200, 350, 200, 20))
-platforms.add(Platform(450, 250, 200, 20))
-platforms.add(Platform(130, 150, 200, 20))
+platforms.add(Platform(200, 350, 200, 40))
+platforms.add(Platform(450, 245, 200, 40))
+platforms.add(Platform(130, 148, 200, 40))
 enemy_1 = Enemy(130, 100, 130, 370, 27)
 enemy_2 = Enemy(450, 200, 450, 700, vida=100)
 enemies = pygame.sprite.Group() 
