@@ -36,7 +36,7 @@ Guilherme Cintra <gcucc>, Thales Rafael <trcs>, José Bruno <jbnos>, Vitória da
 
 
   ## UI
-    Guilherme Cintra: [07/04/25, inicio da implementacao de menus]
-                      [09/04/25, organizacao dos arquivos]
-                      [09/04/25, tela de replay]
+    Vitória das Dores:  [02/04/25, Documento de Planjamento]
+                      [09/04/25, Configuração e layout do Background]
+                      [09/04/25, sprites da plataforma e dos inimigos]
                       
