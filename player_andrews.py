@@ -71,7 +71,7 @@ class Player(pygame.sprite.Sprite):
         self.on_ground = False
         self.invulnerabilidade = False #Se o player não pular em cima do inimigo, ex: Colidir lateralmente, ele perderá vida e entrará em um estado invulnerável
         self.start_time = 0 #Será guardado aqui o exato momento em que o player sofreu dano, pois aqui inicia o estado invunerável
-        self.sword = SwordHitbox(x+50, y, 80, 100, dano=1)
+        self.sword = SwordHitbox(x+50, y, 80, 100, dano=10)
 
         # Carrega spritesheets
         idleSpriteSheet = SpriteSheet(SPRITESHEET_PATH + "Character/Idle/Idle-Sheet.png", idleSprites)
