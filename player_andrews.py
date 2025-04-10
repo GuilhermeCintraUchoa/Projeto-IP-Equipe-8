@@ -62,7 +62,7 @@ class Player(pygame.sprite.Sprite):
 
         self.vida = 3
         self.moedas = 0
-        self.dimensoes = (80,70)
+        self.dimensoes = (70,70)
         self.image = pygame.Surface(self.dimensoes)
         self.image.fill(WHITE)
         self.rect = self.image.get_rect()
