@@ -11,6 +11,7 @@ from moeda import Moeda
 import random
 from vidas import Vida
 from Spritesheet import SpriteSheet
+import time
 
 
 # Inicializa o Pygame
@@ -236,6 +237,7 @@ def game():
             kills += 1
             kills_round += 1
 
+
         player.morte()
         player.sofreu_dano(all_sprites)
         if player.vida == 0:
@@ -270,7 +272,8 @@ def game():
         if moeda_visivel:
             moeda_atual.desenhar(screen)
 
-        if((moedas_round==3) and kills_round == 1):
+        if(kills_round >= 2):
+            time.sleep(0.1)
             game()
  
         pygame.display.flip()
