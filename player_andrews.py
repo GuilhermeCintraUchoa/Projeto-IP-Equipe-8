@@ -62,7 +62,7 @@ class Player(pygame.sprite.Sprite):
 
         self.vida = 3
         self.moedas = 0
-        self.dimensoes = (70,70)
+        self.dimensoes = (80,70)
         self.image = pygame.Surface(self.dimensoes)
         self.image.fill(WHITE)
         self.rect = self.image.get_rect()
@@ -115,7 +115,7 @@ class Player(pygame.sprite.Sprite):
                     self.xDir = 1
                     self.currentState = 'RUN'
                 if (keys[K_SPACE] or keys[K_w] or keys[K_UP]) and self.on_ground:
-                    self.vel_y = -15
+                    self.vel_y = -17
                     self.on_ground = False
                     self.currentState = 'JUMP'
 

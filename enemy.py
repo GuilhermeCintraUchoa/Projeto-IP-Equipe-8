@@ -25,7 +25,8 @@ class Enemy(pygame.sprite.Sprite):
 
     def levar_dano(self, dano):
         self.vida -= dano
-        self.image.fill((255, 100, 100))
+        self.image = pygame.image.load(os.path.join("assets", "sprites", "Enemy.png")).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (50, 50))
         if self.vida <= 0:
             self.die()
     
