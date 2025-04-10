@@ -273,11 +273,11 @@ def game():
         if((moedas_round==3) and kills_round == 1):
             print("A")
             game()
-
+ 
         pygame.display.flip()
 
 def play_again():
-    text_play_again = fonte.render('Play again?', 13, (0, 0, 0))
+    text_play_again = fonte.render('Do you want to play again?', 13, (0, 0, 0))
     textx_playagain = LARGURA / 2 - text_play_again.get_width() / 2
     texty_playagain = (ALTURA / 2 - text_play_again.get_height() / 2) - 40
     textx_size_playagain = text_play_again.get_width()

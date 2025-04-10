@@ -62,7 +62,8 @@ class Player(pygame.sprite.Sprite):
 
         self.vida = 3
         self.moedas = 0
-        self.image = pygame.Surface((60, 60))
+        self.dimensoes = (70,70)
+        self.image = pygame.Surface(self.dimensoes)
         self.image.fill(WHITE)
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
@@ -72,7 +73,7 @@ class Player(pygame.sprite.Sprite):
         self.start_time = 0 #Será guardado aqui o exato momento em que o player sofreu dano, pois aqui inicia o estado invunerável
         self.sword = SwordHitbox(x+50, y, 80, 100, dano=1)
 
-        # Load spritesheets
+        # Carrega spritesheets
         idleSpriteSheet = SpriteSheet(SPRITESHEET_PATH + "Character/Idle/Idle-Sheet.png", idleSprites)
         runSpriteSheet = SpriteSheet(SPRITESHEET_PATH + "Character/Run/Run-Sheet.png", runSprites)
         attackSpriteSheet = SpriteSheet(SPRITESHEET_PATH + "Character/Attack-01/Attack-01-Sheet.png", attackSprites)
@@ -182,14 +183,12 @@ class Player(pygame.sprite.Sprite):
         self.image = self.currentAnimation[int(self.animationIndex)]
 
         # Ajusta hitbox dependendo da animação
-        if self.currentState == 'IDLE':
-            self.rect = pygame.Rect(self.rect.x, self.rect.y, 44, 52)
-        elif self.currentState == 'RUN':
-            self.rect = pygame.Rect(self.rect.x, self.rect.y, 40, 48)
-        elif self.currentState == 'ATTACK':
-            self.rect = pygame.Rect(self.rect.x, self.rect.y, 88, 64)
-        elif self.currentState == 'JUMP':
-            self.rect = pygame.Rect(self.rect.x, self.rect.y, 40, 52)
+        frame = self.currentAnimation[int(self.animationIndex)]
+        # Ajusta para manter proporção, se desejar
+        largura_original, altura_original = frame.get_size()
+        scale_factor = 1.5  
+        self.image = pygame.transform.scale(frame, (int(largura_original * scale_factor), int(altura_original * scale_factor)))
+
 
 
         self.animationIndex += self.animationSpeed
@@ -199,7 +198,11 @@ class Player(pygame.sprite.Sprite):
 
 
     def draw(self, displaySurface):
-        displaySurface.blit(self.image, self.rect)
+        offset_y = 0
+        if self.currentState == 'ATTACK':
+            offset_y = -15  # ajusta conforme a diferença entre sprites
+
+        displaySurface.blit(self.image, (self.rect.x, self.rect.y + offset_y))
 
 
     def selectAnimation(self):
