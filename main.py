@@ -37,7 +37,6 @@ enemy_2 = Enemy(450, 200, 450, 700, 1)
 enemies = pygame.sprite.Group() 
 enemies.add(enemy_1)
 enemies.add(enemy_2)
-
 kills = 0
 moedas_coletadas = 0
 
@@ -254,8 +253,8 @@ def game():
         if vida_extra_visivel and vida_extra is not None:
             vida_extra.desenhar(screen)
 
-        mensagem = pygame.transform.scale_by((fonte.render(f"Monstros mortos: {kills}", True, BLACK)), 0.7)
-        screen.blit(mensagem, (500, 10))
+        mensagem = pygame.transform.scale_by((fonte.render(f"Kills: {kills}", True, BLACK)), 0.7)
+        screen.blit(mensagem, (670, 10))
         all_sprites.draw(screen)
 
         # exibe placar de moedas coletadas
@@ -275,7 +274,6 @@ def game():
         if(kills_round >= 2):
             time.sleep(0.1)
             game()
- 
         pygame.display.flip()
 
 def play_again():
