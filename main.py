@@ -252,8 +252,8 @@ def game():
         if vida_extra_visivel and vida_extra is not None:
             vida_extra.desenhar(screen)
 
-        mensagem = fonte.render(f"Monstros mortos: {kills}", True, BLACK)
-        screen.blit(mensagem, (400, 10))
+        mensagem = pygame.transform.scale_by((fonte.render(f"Monstros mortos: {kills}", True, BLACK)), 0.7)
+        screen.blit(mensagem, (500, 10))
         all_sprites.draw(screen)
 
         # exibe placar de moedas coletadas
@@ -271,7 +271,6 @@ def game():
             moeda_atual.desenhar(screen)
 
         if((moedas_round==3) and kills_round == 1):
-            print("A")
             game()
  
         pygame.display.flip()
