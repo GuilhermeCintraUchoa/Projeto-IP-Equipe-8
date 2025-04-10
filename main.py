@@ -175,7 +175,7 @@ def game():
         tempo_atual_moeda = pygame.time.get_ticks()
 
         # Criar nova moeda se não tiver nenhuma visível e ainda não atingimos o máximo
-        if not moeda_visivel:
+        if not moeda_visivel and moedas_apareceram < MAX_MOEDAS:
             if tempo_atual_moeda - tempo_ultima_moeda >= 3000:
                 moeda_atual = Moeda()
                 moeda_visivel = True
