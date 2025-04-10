@@ -4,6 +4,7 @@
 Guilherme Cintra (gcucc), Thales Rafael (trcs), José Bruno (jbnos), Vitória das Dores (vdsn), Andrews Anaxceu (aags), Vinícius Lopes (vlf)
 
 ## Como o codigo foi organizado
+Ha 3 funcoes basicas usadas para mudar telas entre o jogo: main_menu(), game() e play_again(). Alem da funcao quit_game(), usada para parar a execucao do programa. A funcao main_menu() é chamada sempre que o arquivo main.py é executado, as outras vão sendo chamadas ao decorrer do jogo, a depender de condições diferentes.
 
 ## Capturas de tela
 ![image](https://github.com/user-attachments/assets/f3e57b6e-40f6-45e5-b23c-18c8747e99c9)
