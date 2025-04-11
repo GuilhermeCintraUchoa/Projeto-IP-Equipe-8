@@ -289,7 +289,7 @@ def game(fase=1, player=None):
         if len(enemies) == 0:
             vida_global = player.vida
              
-            if fase < 2:
+            if fase < 3:
                 proxima_fase = fase + 1
                 game(proxima_fase, player)
             else:
