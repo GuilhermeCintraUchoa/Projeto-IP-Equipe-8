@@ -13,7 +13,21 @@ Ha 3 funcoes basicas usadas para mudar telas entre o jogo: main_menu(), game() e
 ![image](https://github.com/user-attachments/assets/b373bacc-5573-468d-b710-652f69ebfeb6)
 ![image](https://github.com/user-attachments/assets/1eee74ed-03ff-406c-a62d-38a8c4fd9644)
 
-## Ferramentas, bibliotecas e frameworks utilizados e razao
+## Estruturação do código
+  Módulos específicos: Jogador, inimigo, plataformas (player_andrews.py, enemy.py).
+  Separação clara: main.py (loop principal), settings.py (configurações), sprites e colisões.
+  Assets organizados: Pastas dedicadas (sprites, imagens, plano de fundo).
+  Classes definidas: Entidades (jogador, inimigos) e mecânicas (ataques, moedas).
+
+
+## Ferramentas, bibliotecas utilizados e razao
+  Andrews[11/04]:
+  Ferramentas: 
+      1. Visual Studio Code: IDE utilizada nas aulas e foi adotada também pela praticidade que todos os membros tinham ao utilizá-la.
+      2. GitHub: Repositório do código para que todos conseguissem salvar e atualizar as mudanças realizadas no projeto.
+  
+  Bibliotecas:
+      1. Pygame: biblioteca sugerida no documento passado pelos professores e que foi adotada pelos membros da equipe.
 
 ## Divisão de trabalho
   ### General (Andrews, Jose, Thales e Guilherme Cintra)
