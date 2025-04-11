@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/323c27aa-f845-4893-982a-e366e5c38885)# Projeto-IP-Equipe-8
+# Projeto-IP-Equipe-8
 # Titulo do trabalho
 ## Membros
 Guilherme Cintra (gcucc), Thales Rafael (trcs), José Bruno (jbnos), Vitória das Dores (vdsn), Andrews Anaxceu (aags), Vinícius Lopes (vlf)
