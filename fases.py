@@ -20,6 +20,7 @@ def construir_fase(fase_numero):
         platforms.append(Platform(600, 200, 200, 20))
         platforms.append(Platform(100, 200, 100, 20))
 
+        enemies.append(Enemy(600, 400, 0, 850, 1))
         enemies.append(Enemy(100, 150, 100, 250, 1))
         enemies.append(Enemy(600, 150, 600, 850, 1))
     
