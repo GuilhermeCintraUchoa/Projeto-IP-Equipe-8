@@ -6,6 +6,7 @@ from player_andrews import Player, Vida_tela, Moeda_tela
 from platform_andrews import Platform 
 from enemy import Enemy
 from sword_hitbox import SwordHitbox
+from fases import construir_fase
 import sys
 from moeda import Moeda
 import random
@@ -29,14 +30,12 @@ clouds = ParallaxBackground("Nuvens.png", speed=0.2, y_pos=0, auto_scroll_speed=
 # Criar objetos
 player = Player(100, ALTURA - 100, True)
 platforms = pygame.sprite.Group()
-platforms.add(Platform(200, 350, 200, 20))
-platforms.add(Platform(450, 250, 200, 20))
-platforms.add(Platform(130, 150, 200, 20))
 enemy_1 = Enemy(130, 100, 130, 370, 1)
 enemy_2 = Enemy(450, 200, 450, 700, 1)
 enemies = pygame.sprite.Group() 
 enemies.add(enemy_1)
 enemies.add(enemy_2)
+
 kills = 0
 moedas_coletadas = 0
 
@@ -74,7 +73,7 @@ def main_menu():
 
         if button_1.collidepoint((mx, my)):
             if click:
-                game()
+                game(fase=1)
         if button_2.collidepoint((mx, my)):
             if click:
                 quit_game()
@@ -103,7 +102,7 @@ def main_menu():
         pygame.display.update()
         clock.tick(FPS)
 
-def game():
+def game(fase=1):
     global kills
     global moedas_coletadas 
     moedas_round = 0
@@ -114,14 +113,15 @@ def game():
     vida_tela = Vida_tela(20, 20)
     moeda_tela = Moeda_tela(20, 70)
     platforms = pygame.sprite.Group()
-    platforms.add(Platform(200, 350, 200, 20))
-    platforms.add(Platform(450, 250, 200, 20))
-    platforms.add(Platform(130, 150, 200, 20))
-    enemy_1 = Enemy(130, 100, 130, 370, 27)
-    enemy_2 = Enemy(450, 200, 450, 700, vida=100)
-    enemies = pygame.sprite.Group() 
-    enemies.add(enemy_1)
-    enemies.add(enemy_2)
+    enemies = pygame.sprite.Group()
+
+    lista_platforms, lista_enemies = construir_fase(fase)
+
+    for plataforma in lista_platforms:
+        platforms.add(plataforma)
+
+    for inimigo in lista_enemies:
+        enemies.add(inimigo)
 
     all_sprites = pygame.sprite.Group()
     all_sprites.add(player)
@@ -161,8 +161,9 @@ def game():
                 pygame.quit()
                 sys.exit()
 
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_n:  # Attack when "n" is pressed
+            keys = pygame.key.get_pressed()  # Attack when "n" is pressed
+            if keys[pygame.K_n]:
+                if not player.sword.active:
                     player.attack()
 
         player.sword.update()
@@ -175,7 +176,7 @@ def game():
         tempo_atual_moeda = pygame.time.get_ticks()
 
         # Criar nova moeda se não tiver nenhuma visível e ainda não atingimos o máximo
-        if not moeda_visivel and moedas_apareceram < MAX_MOEDAS:
+        if not moeda_visivel:
             if tempo_atual_moeda - tempo_ultima_moeda >= 3000:
                 moeda_atual = Moeda()
                 moeda_visivel = True
@@ -253,8 +254,8 @@ def game():
         if vida_extra_visivel and vida_extra is not None:
             vida_extra.desenhar(screen)
 
-        mensagem = pygame.transform.scale_by((fonte.render(f"Kills: {kills}", True, BLACK)), 0.7)
-        screen.blit(mensagem, (670, 10))
+        mensagem = pygame.transform.scale_by((fonte.render(f"Monstros mortos: {kills}", True, BLACK)), 0.7)
+        screen.blit(mensagem, (500, 10))
         all_sprites.draw(screen)
 
         # exibe placar de moedas coletadas
@@ -271,9 +272,14 @@ def game():
         if moeda_visivel:
             moeda_atual.desenhar(screen)
 
-        if(kills_round >= 2):
-            time.sleep(0.1)
-            game()
+        if len(enemies) == 0:
+            if fase < 2:
+                game(fase + 1)
+            else:
+                fase = 0
+        
+    
+ 
         pygame.display.flip()
 
 def play_again():
