@@ -23,6 +23,18 @@ def construir_fase(fase_numero):
         enemies.append(Enemy(600, 400, 0, 850, 1))
         enemies.append(Enemy(100, 150, 100, 250, 1))
         enemies.append(Enemy(600, 150, 600, 850, 1))
+
+    elif fase_numero == 3:
+        platforms.append(Platform(170, 350, 30, 20))
+        platforms.append(Platform(10, 180, 20, 20))
+        platforms.append(Platform(10, 300, 20, 20))
+        platforms.append(Platform(180, 200, 100, 20))
+        platforms.append(Platform(420, 200, 30, 20))
+        platforms.append(Platform(600, 200, 200, 20))
+
+        enemies.append(Enemy(600, 400, 0, 850, 1))
+        enemies.append(Enemy(200, 150, 180, 345, 1))
+        enemies.append(Enemy(600, 150, 600, 850, 1))
     
     else:
         return None, None
