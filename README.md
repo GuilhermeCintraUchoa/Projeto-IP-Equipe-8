@@ -12,7 +12,6 @@ https://docs.google.com/presentation/d/1ByguQIvKx3lZH0lKEpudo990I4AcpCY7948vPblq
 ![image](https://github.com/user-attachments/assets/ecce2676-1dbd-451d-8f9f-ebb36735a792)
 ![image](https://github.com/user-attachments/assets/962ae675-e297-446b-957c-c034d5f7c994)
 ![image](https://github.com/user-attachments/assets/b373bacc-5573-468d-b710-652f69ebfeb6)
-![image](https://github.com/user-attachments/assets/1eee74ed-03ff-406c-a62d-38a8c4fd9644)
 
 ## Estruturação do código
   Módulos específicos: Jogador, inimigo, plataformas (player_andrews.py, enemy.py).
