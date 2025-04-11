@@ -46,5 +46,9 @@ Ha 3 funcoes basicas usadas para mudar telas entre o jogo: main_menu(), game() e
                     [09/04: Mudei o placar que mostrava a qauntidade de vidas coletadas para o total de vida do player.] 
                       
 ## Conceitos da disciplina no projeto
+  Andrews [11/04]: Ao decorrer do projeto foi possível aplicar conceito aprendidos, praticados e aperfeiçoados através da disciplina. Entre eles, a utilização de comandos condicionais; laços de repetição para a implementação do loop do jogo; listas para a criação de grupos; funções para aplicar os métodos de classe; dicionários para agrupar os sprites; e tuplas para passar coordenadas, as dimensões dos sprites, entre outros. 
 
 ## Dificuldades e erros
+  Andrews[28/03]: Fazer com que os inimigos percorressem as plataformas e voltassem continuamente.
+  Andrews e Thales [01/04]: Implementação do método self.kill()
+  Andrews[09/04]: Implementação dos sprites.
