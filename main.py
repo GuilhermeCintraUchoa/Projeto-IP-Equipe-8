@@ -15,6 +15,12 @@ from Spritesheet import SpriteSheet
 import time
 
 
+#variaveis
+player = None
+moedas_coletadas = 0
+kills = 0
+vida_global = None
+
 # Inicializa o Pygame
 pygame.init()
 pygame.font.init()
@@ -61,7 +67,7 @@ text_quit = fonte.render('quit', False, (255, 255, 255))
 text_restart = fonte.render('restart', False, (255, 255, 255))
 
 def main_menu():
-    global click
+    global click, player
     while True:
         screen.fill((0, 0, 0))
         draw_text('main menu', fonte, (255, 255, 255), screen, 20, 20)
@@ -102,14 +108,22 @@ def main_menu():
         pygame.display.update()
         clock.tick(FPS)
 
-def game(fase=1):
+def game(fase=1, player=None):
     global kills
     global moedas_coletadas 
-    moedas_round = 0
+    global vida_global
     kills_round = 0
+    moedas_round = 0
 
     # Criar objetos
-    player = Player(100, ALTURA - 100, True)
+    if player is None:
+        player = Player(100, ALTURA - 100, True)
+    else:
+        player.rect.topleft = (100, ALTURA - 100)
+
+    if vida_global is not None:
+        player.vida = vida_global
+
     vida_tela = Vida_tela(20, 20)
     moeda_tela = Moeda_tela(20, 70)
     platforms = pygame.sprite.Group()
@@ -273,10 +287,14 @@ def game(fase=1):
             moeda_atual.desenhar(screen)
 
         if len(enemies) == 0:
+            vida_global = player.vida
+             
             if fase < 2:
-                game(fase + 1)
+                proxima_fase = fase + 1
+                game(proxima_fase, player)
             else:
-                fase = 0
+                main_menu()  
+            return
         
     
  
