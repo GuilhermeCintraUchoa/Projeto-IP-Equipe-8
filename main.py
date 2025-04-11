@@ -162,7 +162,7 @@ def game():
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_n:  # Attack when "n" is pressed
+                if event.key == pygame.K_n:  # Ataca quando aperta "n"
                     player.attack()
 
         player.sword.update()

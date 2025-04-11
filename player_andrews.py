@@ -98,9 +98,8 @@ class Player(pygame.sprite.Sprite):
         self.previousState = self.currentState
         self.xDir = 0
 
-        # ---------------------------
         # MOVIMENTO HORIZONTAL
-        # ---------------------------
+
         keys = pygame.key.get_pressed()
         if self.currentState != 'ATTACK':
             if keys[K_n]:
@@ -122,9 +121,7 @@ class Player(pygame.sprite.Sprite):
                 
 
 
-        # ---------------------------
         # APLICA MOVIMENTO HORIZONTAL
-        # ---------------------------
         self.rect.x += self.xDir * self.speed
 
         # Colisão horizontal (impede atravessar plataformas lateralmente)
@@ -132,15 +129,14 @@ class Player(pygame.sprite.Sprite):
             if self.rect.colliderect(plat):
                 self.rect.x -= self.xDir * self.speed #Reverte o movimento
 
-        # ---------------------------
         # APLICA GRAVIDADE
-        # ---------------------------
+
         self.vel_y += GRAVITY
         self.rect.y += self.vel_y
 
-        # ---------------------------
+
         # COLISÃO VERTICAL COM PLATAFORMAS
-        # ---------------------------
+ 
         self.on_ground = False
         for plat in platforms:
             if self.rect.colliderect(plat):
@@ -153,17 +149,16 @@ class Player(pygame.sprite.Sprite):
                     self.vel_y = 0
 
 
-        # ---------------------------
+
         # COLISÃO COM O CHÃO DA TELA
-        # ---------------------------
+
         if self.rect.bottom > ALTURA:
             self.rect.bottom = ALTURA
             self.vel_y = 0
             self.on_ground = True
 
-        # ---------------------------
         # LIMITES DA TELA
-        # ---------------------------
+
         if self.rect.left < 0:
             self.rect.left = 0
         if self.rect.right > LARGURA:
@@ -172,9 +167,9 @@ class Player(pygame.sprite.Sprite):
         # Animação de pulo ativada apenas quando estiver no ar (subindo ou descendo)
             if self.vel_y != 0 and self.currentState not in ['ATTACK', 'JUMP']:
                 self.currentState = 'JUMP'
-        # ---------------------------
+
         # ANIMAÇÃO
-        # ---------------------------
+
         self.selectAnimation()
 
         if self.previousState != self.currentState:

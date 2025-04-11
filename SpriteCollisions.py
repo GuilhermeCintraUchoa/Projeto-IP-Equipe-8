@@ -50,7 +50,7 @@ class Hero(pygame.sprite.Sprite):
     def __init__(self, position, faceRight):
         super().__init__()
 
-        # Load spritesheets
+        # Carrega SpriteSheets
         idleSpriteSheet = SpriteSheet(SPRITESHEET_PATH + "Character/Idle/Idle-Sheet.png", idleSprites)
         runSpriteSheet = SpriteSheet(SPRITESHEET_PATH + "Character/Run/Run-Sheet.png", runSprites)
         attackSpriteSheet = SpriteSheet(SPRITESHEET_PATH + "Character/Attack-01/Attack-01-Sheet.png", attackSprites)
@@ -76,7 +76,7 @@ class Hero(pygame.sprite.Sprite):
         self.previousState = self.currentState
         self.xDir = 0
 
-        # get key status
+        # key status
         if self.currentState != 'ATTACK' and self.currentState != 'DIE':
             keys = pygame.key.get_pressed()
             if keys[pygame.K_SPACE]:
@@ -92,18 +92,18 @@ class Hero(pygame.sprite.Sprite):
             else:
                 self.currentState = 'IDLE'
 
-        # Select animation for current player action (idle, run, jump, fall, etc.)
+        # Seleciona a imagem para o estado atual (idle, run, jump, fall, etc.)
         self.selectAnimation()
 
-        # Start from beginning of a new animation
+        # Começa a animação do início
         if self.previousState != self.currentState:
             self.animationIndex = 0
 
-        # Select the image
+        # Seleciona a imagem
         self.image = self.currentAnimation[int(self.animationIndex)]
 
-        # Select a rect size depending on the current animation
-        # (xPos, yPos) = bottom-center position of the sprite
+        # Seleciona o tamanho do rect dependendo da animação
+        # (xPos, yPos) =posição bottom-center do sprite
         if self.currentState == 'IDLE':
             self.rect = pygame.Rect(self.xPos - 22, self.yPos - 52, 44, 52)
         elif self.currentState == 'RUN':
@@ -113,7 +113,7 @@ class Hero(pygame.sprite.Sprite):
         elif self.currentState == 'DIE':
             self.rect = pygame.Rect(self.xPos - 32, self.yPos - 48, 64, 48)
 
-        # Play animation until end of current animation is reached
+        # Roda a animação até que a animação chegue ao fim
         self.animationIndex += self.animationSpeed
         if self.animationIndex >= len(self.currentAnimation):
             if self.currentState == 'DIE':
@@ -124,7 +124,7 @@ class Hero(pygame.sprite.Sprite):
 
         self.moveHorizontal(level)
 
-        # Handle collisions with enemies
+        # Lica com colisão com inimigos
         self.checkEnemyCollisions(level.bees)
 
 
@@ -144,7 +144,7 @@ class Hero(pygame.sprite.Sprite):
 
 
     def checkEnemyCollisions(self, enemies):
-        # Check for collisions between hero and all enemies in the spritegroup
+        # CHeca por colisões entre o jogador e todos os inimigos no spritegroup
         collidedSprites = pygame.sprite.spritecollide(self, enemies, False)
         for enemy in collidedSprites:
             if self.currentState == 'ATTACK':
@@ -156,9 +156,9 @@ class Hero(pygame.sprite.Sprite):
                         enemy.die()
             else:
                 if enemy.currentState != 'DYING':
-                    if self.rect.left < enemy.rect.left:  # Collision on right side
+                    if self.rect.left < enemy.rect.left:  # Colisão no lado direito
                         if self.rect.right > enemy.rect.left + 16:
                             self.die()
-                    elif self.rect.right > enemy.rect.right:  # Collision on left side
+                    elif self.rect.right > enemy.rect.right:  # Colisão no lado esquerdo
                         if self.rect.left < enemy.rect.right - 16:
                             self.die()
