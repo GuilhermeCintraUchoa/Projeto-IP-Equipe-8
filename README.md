@@ -30,6 +30,9 @@ Ha 3 funcoes basicas usadas para mudar telas entre o jogo: main_menu(), game() e
     - Andrews [01/04]: Iniciei a classe inimigos, a sua movimentação na plataforma, e a lógica de matar o inimigo.
     - Andrews e Thales [01/04-02/04]: Correção de alguns bugs que aconteciam com a morte do inimigo. Ao utilizarmos o método self.kill(), o retangulo permanecia no jogo. Logo, ao chamarmos a função para verificar a colisão do jogador, o programa contava a sua morte mais de uma vez. 
 
+  ### Função de ataque (José Bruno)
+    - José Bruno: [04/04, foi criada a função de ataque do player]
+
   ### UI (Guilherme Cintra e Vitoria das Dores)
     - Guilherme Cintra: [07/04/25, inicio da implementacao de menus]
                       [09/04/25, organizacao dos arquivos]
@@ -44,6 +47,9 @@ Ha 3 funcoes basicas usadas para mudar telas entre o jogo: main_menu(), game() e
                     [09/04: Corrigi alguns erros na função game(), no main.py (na parte das moedas) e no moedas.py, que estavam fazendo as moedas aparecerem infinitamente qaundo não eram coletadas (ficavam aparecendo moedas até que três tivessem sido coletadas).]
                     [09/04: Atualizei a lógica das vidas coletáveis dentro da função game() para que só aparecessem duas vidas ao longo da fase (com intervalo de 7 segundos do começo do jogo até a aparição da primeira vida e intervalo de 7 segundos entre uma vida e                           outra) e adicionei um placar que contabiliza as vidas coletadas.]
                     [09/04: Mudei o placar que mostrava a qauntidade de vidas coletadas para o total de vida do player.] 
+
+  ### Fases do jogo (José Bruno)
+    - José Bruno: [10/04, foram criadas mais fases do jogo]
                       
 ## Conceitos da disciplina no projeto
   Andrews [11/04]: Ao decorrer do projeto foi possível aplicar conceito aprendidos, praticados e aperfeiçoados através da disciplina. Entre eles, a utilização de comandos condicionais; laços de repetição para a implementação do loop do jogo; listas para a criação de grupos; funções para aplicar os métodos de classe; dicionários para agrupar os sprites; e tuplas para passar coordenadas, as dimensões dos sprites, entre outros. 
